@@ -115,7 +115,7 @@ if "current_page" not in st.session_state:
 # Fonction pour naviguer vers une autre page
 def navigate_to(page_name):
     st.session_state.page = page_name
-    st.rerun()
+    st.experimental_rerun()
 
 # Fonction pour réinitialiser la page à l'état initial
 def reset_to_home_page():
@@ -123,7 +123,7 @@ def reset_to_home_page():
     st.session_state.selected_movie = None
     st.session_state.search_query = ""
     st.session_state.current_page = 1
-    st.rerun()
+    st.experimental_rerun()
 
 # Fonction pour afficher le bouton "Retour page principale"
 def show_back_to_home_button():
@@ -131,7 +131,7 @@ def show_back_to_home_button():
         reset_to_home_page()
 
 # Barre de recherche et boutons en haut
-col1, col4 = st.columns([2, 1])
+col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
 
 with col1:
     search_query = st.text_input("Recherchez un film par titre", st.session_state.search_query)
@@ -141,6 +141,14 @@ if search_query != st.session_state.search_query:
     st.session_state.search_query = search_query
     st.session_state.page = "results"
 
+with col2:
+    if st.button("Étude de marché en Creuse"):
+        navigate_to("pdf1")
+
+with col3:
+    if st.button("Descriptif de la base Cin&moi"):
+        navigate_to("pdf2")
+
 with col4:
     st.markdown(
         '<a href="https://trello.com/b/Y5yM7uhR" target="_blank" style="text-decoration: none;">'
@@ -148,6 +156,24 @@ with col4:
         'L\'équipe</button></a>',
         unsafe_allow_html=True
     )
+
+
+# Gestion des pages PDF
+if st.session_state.page == "pdf1":
+    st.markdown("### Étude de marché en Creuse")
+    pdf_path = "kpi1.pdf"
+    with open(pdf_path, "rb") as f:
+        pdf_data = f.read()
+    st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
+    show_back_to_home_button()
+
+elif st.session_state.page == "pdf2":
+    st.markdown("### Descriptif de la base Cin&moi")
+    pdf_path = "kpi2.pdf"
+    with open(pdf_path, "rb") as f:
+        pdf_data = f.read()
+    st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
+    show_back_to_home_button()
 
 elif st.session_state.page == "results":
     col1, col2 = st.columns([1, 3])
@@ -176,7 +202,7 @@ elif st.session_state.page == "results":
 
         if total_movies == 0:
             st.warning("Aucun film ne correspond à vos critères.")
-            st.image("tipanic.jpg", caption="Film non trouvé", use_container_width=0.7)
+            st.image("tipanic.jpg", caption="Film non trouvé", use_column_width=0.7)
         else:
             total_pages = max(1, (total_movies // movies_per_page) + (1 if total_movies % movies_per_page > 0 else 0))
             current_page = st.session_state.current_page
@@ -185,11 +211,11 @@ elif st.session_state.page == "results":
             with col_left:
                 if st.button("⬅️ Page précédente") and current_page > 1:
                     st.session_state.current_page -= 1
-                    st.rerun()
+                    st.experimental_rerun()
             with col_right:
                 if st.button("➡️ Page suivante") and current_page < total_pages:
                     st.session_state.current_page += 1
-                    st.rerun()
+                    st.experimental_rerun()
 
             start_idx = (current_page - 1) * movies_per_page
             end_idx = min(start_idx + movies_per_page, total_movies)
@@ -197,7 +223,7 @@ elif st.session_state.page == "results":
             for _, row in filtered_data.iloc[start_idx:end_idx].iterrows():
                 col_img, col_info = st.columns([1, 3])
                 with col_img:
-                    st.image(row['poster_path'], use_container_width=True)
+                    st.image(row['poster_path'], use_column_width=True)
                 with col_info:
                     movie_info = get_movie_info(row['imdb_id'])  # Récupération des infos en français
                     st.markdown(f"### {movie_info['title']}")
