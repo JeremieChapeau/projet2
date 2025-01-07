@@ -161,7 +161,7 @@ with col4:
 # Gestion des pages PDF
 if st.session_state.page == "pdf1":
     st.markdown("### Étude de marché en Creuse")
-    pdf_path = ".\kpi1.pdf"
+    pdf_path = "kpi1.pdf"
     with open(pdf_path, "rb") as f:
         pdf_data = f.read()
     st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
@@ -169,7 +169,7 @@ if st.session_state.page == "pdf1":
 
 elif st.session_state.page == "pdf2":
     st.markdown("### Descriptif de la base Cin&moi")
-    pdf_path = ".\kpi2.pdf"
+    pdf_path = "kpi2.pdf"
     with open(pdf_path, "rb") as f:
         pdf_data = f.read()
     st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
