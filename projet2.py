@@ -202,7 +202,7 @@ elif st.session_state.page == "results":
 
         if total_movies == 0:
             st.warning("Aucun film ne correspond à vos critères.")
-            st.image("tipanic.jpg", caption="Film non trouvé", use_column_width=0.7)
+            st.image("tipanic.jpg", caption="Film non trouvé", use_container_width=0.7)
         else:
             total_pages = max(1, (total_movies // movies_per_page) + (1 if total_movies % movies_per_page > 0 else 0))
             current_page = st.session_state.current_page
@@ -223,7 +223,7 @@ elif st.session_state.page == "results":
             for _, row in filtered_data.iloc[start_idx:end_idx].iterrows():
                 col_img, col_info = st.columns([1, 3])
                 with col_img:
-                    st.image(row['poster_path'], use_column_width=True)
+                    st.image(row['poster_path'], use_container_width=True)
                 with col_info:
                     movie_info = get_movie_info(row['imdb_id'])  # Récupération des infos en français
                     st.markdown(f"### {movie_info['title']}")
