@@ -115,7 +115,7 @@ if "current_page" not in st.session_state:
 # Fonction pour naviguer vers une autre page
 def navigate_to(page_name):
     st.session_state.page = page_name
-    st.experimental_rerun()
+    st.rerun()
 
 # Fonction pour réinitialiser la page à l'état initial
 def reset_to_home_page():
@@ -123,7 +123,7 @@ def reset_to_home_page():
     st.session_state.selected_movie = None
     st.session_state.search_query = ""
     st.session_state.current_page = 1
-    st.experimental_rerun()
+    st.rerun()
 
 # Fonction pour afficher le bouton "Retour page principale"
 def show_back_to_home_button():
@@ -211,11 +211,11 @@ elif st.session_state.page == "results":
             with col_left:
                 if st.button("⬅️ Page précédente") and current_page > 1:
                     st.session_state.current_page -= 1
-                    st.experimental_rerun()
+                    st.rerun()
             with col_right:
                 if st.button("➡️ Page suivante") and current_page < total_pages:
                     st.session_state.current_page += 1
-                    st.experimental_rerun()
+                    st.rerun()
 
             start_idx = (current_page - 1) * movies_per_page
             end_idx = min(start_idx + movies_per_page, total_movies)
