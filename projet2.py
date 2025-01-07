@@ -157,23 +157,25 @@ with col4:
         unsafe_allow_html=True
     )
 
-
 # Gestion des pages PDF
 if st.session_state.page == "pdf1":
     st.markdown("### Étude de marché en Creuse")
     pdf_path = "kpi1.pdf"
-    with open(pdf_path, "rb") as f:
-        pdf_data = f.read()
-    st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
+    # Conversion des pages du PDF en images
+    images = convert_from_path(pdf_path)
+    for image in images:
+        st.image(image, use_column_width=True)  # Afficher chaque page comme une image
     show_back_to_home_button()
 
 elif st.session_state.page == "pdf2":
     st.markdown("### Descriptif de la base Cin&moi")
     pdf_path = "kpi2.pdf"
-    with open(pdf_path, "rb") as f:
-        pdf_data = f.read()
-    st.markdown(f'<iframe src="data:application/pdf;base64,{base64.b64encode(pdf_data).decode()}" width="700" height="900"></iframe>', unsafe_allow_html=True)
+    # Conversion des pages du PDF en images
+    images = convert_from_path(pdf_path)
+    for image in images:
+        st.image(image, use_column_width=True)  # Afficher chaque page comme une image
     show_back_to_home_button()
+
 
 elif st.session_state.page == "results":
     col1, col2 = st.columns([1, 3])
