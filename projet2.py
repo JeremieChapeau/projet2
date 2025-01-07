@@ -143,11 +143,11 @@ if search_query != st.session_state.search_query:
 
 with col2:
     if st.button("Étude de marché en Creuse"):
-        navigate_to("pdf1")
+        navigate_to(".\kpi1.pdf")
 
 with col3:
     if st.button("Descriptif de la base Cin&moi"):
-        navigate_to("pdf2")
+        navigate_to(".\kpi2.pdf")
 
 with col4:
     st.markdown(
